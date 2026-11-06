@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}{{ 'Edit' if row else 'Create' }} user{% endblock %}
+{% block content %}<h1 class="h2">{{ 'Edit user account' if row else 'Create user account' }}</h1>
+<form method="post" class="card card-body form-card">
+<div class="mb-3"><label class="form-label">Full name</label><input class="form-control" name="full_name" required value="{{ row.full_name if row else '' }}"></div>
+<div class="mb-3"><label class="form-label">Username</label><input class="form-control" name="username" required value="{{ row.username if row else '' }}" {% if row %}readonly{% endif %}></div>
+<div class="mb-3"><label class="form-label">Email</label><input class="form-control" type="email" name="email" required value="{{ row.email if row else '' }}"></div>
+{% if not row %}<div class="mb-3"><label class="form-label">Temporary password (minimum 8 characters)</label><input class="form-control" type="password" name="password" required minlength="8"></div>{% endif %}
+<div class="mb-3"><label class="form-label">Role</label><select class="form-select" name="role">{% for role in ['USER_ADMIN','INTERIOR_DESIGNER','CUSTOMER','PLATFORM_MANAGER'] %}<option value="{{ role }}" {% if row and row.role==role %}selected{% endif %}>{{ role.replace('_',' ').title() }}</option>{% endfor %}</select></div>
+{% if row %}<div class="mb-3"><label class="form-label">Status</label><select class="form-select" name="status"><option {% if row.status=='ACTIVE' %}selected{% endif %}>ACTIVE</option><option {% if row.status=='SUSPENDED' %}selected{% endif %}>SUSPENDED</option></select></div>{% endif %}
+<div><button class="btn btn-primary">Save</button> <a class="btn btn-outline-secondary" href="{{ url_for('view_user_account.users_list') }}">Cancel</a></div>
+</form>{% endblock %}

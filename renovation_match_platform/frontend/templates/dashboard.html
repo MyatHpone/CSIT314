@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}Dashboard · Renovation Match{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3"><div><h1 class="h2">Dashboard</h1><p class="text-secondary mb-0">Discover renovation projects and manage your work.</p></div><a class="btn btn-primary" href="{{ url_for('view_project.projects') }}">Browse projects</a></div>
+<div class="row g-3 mb-4">
+{% for label,value in [('Users',counts.users),('Companies',counts.companies),('Projects',counts.projects),('Categories',counts.categories)] %}
+<div class="col-6 col-lg-3"><div class="card metric-card"><div class="card-body"><div class="text-secondary">{{ label }}</div><div class="display-6">{{ value }}</div></div></div></div>
+{% endfor %}
+</div>
+<div class="d-flex justify-content-between align-items-center"><h2 class="h4">Recently updated projects</h2><a href="{{ url_for('view_project.projects') }}">View all</a></div>
+<div class="row g-3">{% for p in projects %}<div class="col-md-6 col-lg-3"><div class="card h-100"><div class="card-body"><span class="badge text-bg-light">{{ p.status }}</span><h3 class="h6 mt-2">{{ p.title }}</h3><p class="small text-secondary">{{ p.company_name }} · {{ p.location }}</p><p class="mb-2">${{ "{:,.0f}".format(p.budget) }}</p><a class="btn btn-sm btn-outline-primary" href="{{ url_for('view_project_detail.project_detail',project_id=p.id) }}">View project</a></div></div></div>{% endfor %}</div>
+{% endblock %}

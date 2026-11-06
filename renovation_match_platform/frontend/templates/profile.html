@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}My profile{% endblock %}
+{% block content %}<h1 class="h2">My profile</h1><p class="text-secondary">Review and update your personal details.</p>
+<form method="post" class="card card-body form-card">
+<div class="row g-3"><div class="col-md-6"><label class="form-label">Username</label><input class="form-control" value="{{ row.username }}" disabled></div><div class="col-md-6"><label class="form-label">Email</label><input class="form-control" value="{{ row.email }}" disabled></div>
+<div class="col-md-6"><label class="form-label">Full name</label><input class="form-control" value="{{ row.full_name }}" disabled></div><div class="col-md-6"><label class="form-label">Phone</label><input class="form-control" name="phone" value="{{ row.phone }}"></div>
+<div class="col-md-6"><label class="form-label">Location</label><input class="form-control" name="location" value="{{ row.location }}"></div><div class="col-12"><label class="form-label">Bio</label><textarea class="form-control" rows="4" name="bio">{{ row.bio }}</textarea></div></div>
+<div class="mt-3"><button class="btn btn-primary">Update profile</button></div></form>
+<div class="card card-body mt-4 border-danger"><h2 class="h5">Suspend my account</h2><p class="small text-secondary">This signs you out and blocks future login until an administrator reactivates the account.</p><form method="post" action="{{ url_for('suspend_user_profile.profile_suspend') }}" onsubmit="return confirm('Suspend your account?')"><button class="btn btn-outline-danger">Suspend account</button></form></div>
+{% endblock %}

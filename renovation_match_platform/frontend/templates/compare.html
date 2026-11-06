@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Compare projects{% endblock %}
+{% block content %}<h1 class="h2">Compare shortlisted projects</h1><p class="text-secondary">Projects are shown side by side for easier comparison.</p>
+{% if rows %}<div class="table-responsive"><table class="table table-bordered"><thead><tr><th>Detail</th>{% for p in rows %}<th>{{ p.title }}</th>{% endfor %}</tr></thead><tbody>
+{% for label,key in [('Studio','company_name'),('Category','category_name'),('Status','status'),('Location','location'),('Budget (SGD)','budget'),('Views','views'),('Description','description')] %}<tr><th>{{ label }}</th>{% for p in rows %}<td>{% if key=='budget' %}${{ "{:,.0f}".format(p[key]) }}{% else %}{{ p[key] or '—' }}{% endif %}</td>{% endfor %}</tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="alert alert-info">Save at least one project to compare it here.</div>{% endif %}{% endblock %}
