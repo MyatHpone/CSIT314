@@ -9,6 +9,9 @@ class UpdateCompanyController:
             ok, result = ViewCompanyController().view_company(actor, company_id)
             if not ok:
                 return False, result
+            name = data.get("name","").strip()
+            if not name:
+                return False,"Campany name is required"
             Company.update_company(company_id, data.get("name", "").strip(), data.get("description", ""),
                                    data.get("phone", ""), data.get("email", ""), data.get("address", ""),
                                    data.get("website", ""))
