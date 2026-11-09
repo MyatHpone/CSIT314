@@ -46,6 +46,6 @@ class Report:
             "new_users": count("SELECT COUNT(*) n FROM users WHERE substr(created_at,1,10)>=? AND substr(created_at,1,10)<?"),
             "new_projects": count("SELECT COUNT(*) n FROM projects WHERE substr(created_at,1,10)>=? AND substr(created_at,1,10)<?"),
             "activity_events": count("SELECT COUNT(*) n FROM activity_events WHERE substr(occurred_at,1,10)>=? AND substr(occurred_at,1,10)<?"),
-            "project_views": count("SELECT COALESCE(SUM(views),0) n FROM projects WHERE substr(updated_at,1,10)>=? AND substr(updated_at,1,10)<?"),
+            "project_views": count("SELECT COUNT(*) n FROM activity_events WHERE event_type='PROJECT_VIEWED' AND substr(occurred_at,1,10)>=? AND substr(occurred_at,1,10)<?"),
             "shortlists": count("SELECT COUNT(*) n FROM favourites WHERE substr(saved_at,1,10)>=? AND substr(saved_at,1,10)<?"),
         }
