@@ -55,30 +55,6 @@ renovation_match_platform/
 └── README.md
 ```
 
-**Layer rules** (enforced by `ArchitectureTests`):
-
-- **Boundary** handles HTTP only (request, session, flash, render, redirect). Each boundary file has a class (for example `CreateUserAccountBoundary` with `display_page`, `submit_form`, `show_success`, `show_error`) and a thin Flask route that calls it. It calls controllers and never imports entities or the database.
-- **Controller** holds validation and business rules and returns `(success, result)` tuples, like the SDM controllers. No Flask code.
-- **Entity** owns the data and parameterised SQL. It never imports controllers or boundaries.
-
-| Use case (stories) | Boundary | Controller | Entity |
-|---|---|---|---|
-| Login / logout (1, 2, 13, 14, 30, 31, 47, 48) | `login_user_account`, `logout_user_account` | `LoginUserAccountController`, `LogoutUserAccountController` | `UserAccount`, `ActivityEvent` |
-| Dashboard | `view_dashboard` | `ViewDashboardController` | `Report`, `Project` |
-| Create / update / suspend account (3, 4, 6) | `create_`, `update_`, `suspend_user_account` | matching controllers | `UserAccount` |
-| View / search accounts (5, 7) | `view_user_account`, `search_user_account` | matching controllers | `UserAccount` |
-| Profile create (8) | called by `create_user_account` | `CreateUserProfileController` | `UserProfile` |
-| Profile view / update / search / suspend (9-12) | `view_`, `update_`, `search_`, `suspend_user_profile` | matching controllers | `UserProfile` |
-| Company create / view / search / update / delete (15-19) | `create_`, `view_`, `search_`, `update_`, `delete_company` | matching controllers | `Company` |
-| Project create / view / search / update / delete, current and past (20-29) | `create_`, `view_`, `search_`, `update_`, `delete_project` | matching controllers | `Project`, `Company` |
-| Public search and project details (32, 33) | `search_project`, `view_project_detail` | `SearchProjectController`, `ViewProjectDetailController` | `Project` |
-| Shortlist save / view / search / compare (34-36) | `save_favourite`, `view_favourites`, `search_favourite`, `compare_favourites` | matching controllers | `Favourite` |
-| Analytics (37, 38) | `view_project_analytics` | `ViewProjectAnalyticsController` | `Project` |
-| Category create / view / search / update / delete (39-43) | `create_`, `view_`, `search_`, `update_`, `delete_category` | matching controllers | `Category` |
-| Reports (44-46) | `generate_report` | `GenerateReportController` | `Report` |
-| JSON API | `api_boundary` | search / detail / dashboard controllers | - |
-
-Security basics: hashed passwords, parameterised SQL, role checks in the boundary, ownership checks in the controllers, session clearing, and active/suspended account handling.
 
 ## Main screens
 
